@@ -13,7 +13,7 @@ namespace Colso.DashboardTransferTool.AppCode
     internal class DashboardHelper
     {
         /// <summary>
-        /// Retrieve the list of dashboards 
+        /// Retrieve the list of dashboards
         /// </summary>
         /// <param name="service">Organization Service</param>
         /// <returns>List of dashboards</returns>
@@ -29,12 +29,12 @@ namespace Colso.DashboardTransferTool.AppCode
                         Conditions =
                         {
                             new ConditionExpression("objecttypecode", ConditionOperator.Equal, "none"),
-                            new ConditionExpression("typename", ConditionOperator.Equal, "Dashboard")
+                            new ConditionExpression("type", ConditionOperator.Equal, 0)
                         }
                     }
                 });
 
-               return results.Entities.ToList();
+                return results.Entities.ToList();
             }
             catch (Exception error)
             {
@@ -55,7 +55,7 @@ namespace Colso.DashboardTransferTool.AppCode
                         Conditions =
                         {
                             new ConditionExpression("objecttypecode", ConditionOperator.Equal, "none"),
-                            new ConditionExpression("typename", ConditionOperator.Equal, "Dashboard")
+                            new ConditionExpression("type", ConditionOperator.Equal, 0)
                         }
                     }
                 });
