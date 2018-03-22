@@ -18,7 +18,7 @@ using XrmToolBox.Extensibility.Interfaces;
 
 namespace Colso.DashboardTransferTool
 {
-    public partial class DashboardTransferTool : UserControl, IXrmToolBoxPluginControl, IGitHubPlugin, IHelpPlugin, IStatusBarMessenger
+    public partial class DashboardTransferTool : PluginControlBase, IXrmToolBoxPluginControl, IGitHubPlugin, IHelpPlugin, IStatusBarMessenger, IPayPalPlugin
     {
         #region Variables
 
@@ -49,8 +49,6 @@ namespace Colso.DashboardTransferTool
 
         #region XrmToolbox
 
-        public event EventHandler OnCloseTool;
-        public event EventHandler OnRequestConnection;
         public event EventHandler<StatusBarMessageEventArgs> SendMessageToStatusBar;
 
         public Image PluginLogo
@@ -58,10 +56,6 @@ namespace Colso.DashboardTransferTool
             get { return null; }
         }
 
-        public IOrganizationService Service
-        {
-            get { throw new NotImplementedException(); }
-        }
 
         public string HelpUrl
         {
@@ -87,19 +81,23 @@ namespace Colso.DashboardTransferTool
             }
         }
 
-        public void ClosingPlugin(PluginCloseInfo info)
+        public string DonationDescription
         {
-            if (info.FormReason != CloseReason.None ||
-                info.ToolBoxReason == ToolBoxCloseReason.CloseAll ||
-                info.ToolBoxReason == ToolBoxCloseReason.CloseAllExceptActive)
+            get
             {
-                return;
+                return "Donation for Data Transporter Tool - XrmToolBox";
             }
-
-            info.Cancel = MessageBox.Show(@"Are you sure you want to close this tab?", @"Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes;
         }
 
-        public void UpdateConnection(IOrganizationService newService, ConnectionDetail connectionDetail, string actionName = "", object parameter = null)
+        public string EmailAccount
+        {
+            get
+            {
+                return "bramcolpaert@outlook.com";
+            }
+        }
+
+        public override void UpdateConnection(IOrganizationService newService, ConnectionDetail connectionDetail, string actionName = "", object parameter = null)
         {
             if (actionName == "TargetOrganization")
             {
@@ -134,32 +132,21 @@ namespace Colso.DashboardTransferTool
 
         private void btnSelectTarget_Click(object sender, EventArgs e)
         {
-            if (OnRequestConnection != null)
-            {
-                var args = new RequestConnectionEventArgs { ActionName = "TargetOrganization", Control = this };
-                OnRequestConnection(this, args);
-            }
+            var args = new RequestConnectionEventArgs { ActionName = "TargetOrganization", Control = this };
+            RaiseRequestConnectionEvent(args);
         }
 
         private void tsbCloseThisTab_Click(object sender, EventArgs e)
         {
-            if (OnCloseTool != null)
-                OnCloseTool(this, null);
+            CloseTool();
         }
 
         private void tsbLoadDashboards_Click(object sender, EventArgs e)
         {
             if (service == null)
             {
-                if (OnRequestConnection != null)
-                {
-                    var args = new RequestConnectionEventArgs
-                    {
-                        ActionName = "Load",
-                        Control = this
-                    };
-                    OnRequestConnection(this, args);
-                }
+                var args = new RequestConnectionEventArgs { ActionName = "Load", Control = this };
+                RaiseRequestConnectionEvent(args);
             }
             else
             {

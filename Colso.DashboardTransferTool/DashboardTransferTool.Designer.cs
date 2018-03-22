@@ -202,7 +202,7 @@
             // tsbLoadDashboards
             // 
             this.tsbLoadDashboards.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.tsbLoadDashboards.Image = global::Colso.DashboardTransferTool.Properties.Resources.dashboard;
+            this.tsbLoadDashboards.Image = global::Colso.Xrm.DashboardTransferTool.Properties.Resources.dashboard;
             this.tsbLoadDashboards.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLoadDashboards.Name = "tsbLoadDashboards";
             this.tsbLoadDashboards.Size = new System.Drawing.Size(117, 22);
@@ -211,7 +211,7 @@
             // 
             // tsbTransferDashboards
             // 
-            this.tsbTransferDashboards.Image = global::Colso.DashboardTransferTool.Properties.Resources.dashboard_retrieve;
+            this.tsbTransferDashboards.Image = global::Colso.Xrm.DashboardTransferTool.Properties.Resources.dashboard_retrieve;
             this.tsbTransferDashboards.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbTransferDashboards.Name = "tsbTransferDashboards";
             this.tsbTransferDashboards.Size = new System.Drawing.Size(133, 22);
