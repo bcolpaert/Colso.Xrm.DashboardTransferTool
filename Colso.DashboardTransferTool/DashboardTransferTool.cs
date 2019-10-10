@@ -296,14 +296,7 @@ namespace Colso.DashboardTransferTool
                     }
                     catch (FaultException<OrganizationServiceFault> error)
                     {
-                        if(error.HResult == -2146233087)
-                        {
-                            errors.Add(new Tuple<string, string>(name, "The dashboard you tried to transfer already exists but you don't have read access to it. Get access to this dashboard on the target organization to update it"));
-                        }
-                        else
-                        {
-                            errors.Add(new Tuple<string, string>(name, error.Message));
-                        }
+                        errors.Add(new Tuple<string, string>(name, error.Message));
                     }
                 }
 
